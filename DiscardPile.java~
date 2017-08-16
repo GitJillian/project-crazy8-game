@@ -1,0 +1,28 @@
+import java.util.Stack;
+import java.util.Random;
+public class DiscardPile{
+ /* the actual discard pile */
+ protected Stack<Card> cards = new Stack<Card>();
+ 
+ /* the top card on the discard pile */
+ public Card top(){ 
+  if(cards.isEmpty()){ 
+   return new Card("None","None");
+  }
+  return cards.peek(); 
+ }
+ 
+ /* add a card to the discard pile */
+ public void add(Card card){
+  cards.push(card);
+ }
+ public void test(){
+   Card card=new Card(Card.SUITS[3],Card.RANKS[7]);
+   cards.add(card);
+   
+   
+   System.out.println(cards.size);}
+ public static void main(String[] args){
+   test();
+ }
+}

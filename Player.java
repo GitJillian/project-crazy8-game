@@ -1,0 +1,88 @@
+import java.util.ArrayList;
+import java.util.Stack;
+import java.util.Random;
+
+public abstract class Player{
+ protected ArrayList<Card> hand;
+ 
+ public int getSizeOfHand(){
+  return hand.size();
+ }
+
+ public String countMax()
+   { 
+     int max=-1;
+     int i=0;
+     int[] count = new int[4];
+     String str="";
+     while(i < this.hand.size())
+     {
+       if(this.hand.get(i).getSuit().equals(Card.RANKS[0]))
+         { count[0] += 1; }
+       if(this.hand.get(i).getSuit().equals(Card.RANKS[1]))
+         { count[1] += 1; }
+       if(this.hand.get(i).getSuit().equals(Card.RANKS[2]))
+         { count[2] += 1; }
+       if(this.hand.get(i).getSuit().equals(Card.RANKS[3]))
+         { count[3] += 1;}
+       if(i==hand.size())
+         { break;}
+     }
+     for(i=0;i<count.length;i++)
+     { if(count[i]>max)
+         max=count[i];
+         switch(i)
+         {
+           case 0:
+             str=Card.RANKS[0];break;
+           case 1:  
+             str=Card.RANKS[1];break;
+           case 2:  
+             str=Card.RANKS[2];break;
+           case 3:  
+             str=Card.RANKS[0];break;
+         }
+     }
+   return str;
+   }
+ 
+ public void placeEight(String str, DiscardPile discardPile)
+ {
+     
+     Card card=new Card(str,"8");
+     discardPile.add(card);
+     }
+
+ public ArrayList<Integer> checkEight( ArrayList<Card> hand )
+ {
+   ArrayList<Integer> eight=new ArrayList<Integer>();
+   for(int i=0;i<hand.size();i++)
+   {
+    if(this.hand.get(i).rank.equals("8"))  
+     { 
+      eight.add(i);
+     }
+   }
+   return eight;
+ }
+ 
+ public Card takeCards(Stack<Card>       drawPile)
+ {
+    this.hand.add(drawPile.peek());
+    drawPile.pop();
+    return this.hand.get( this.hand.size() - 1);
+ } 
+ 
+ /* play a card  */
+    public abstract boolean play(DiscardPile       discardPile,
+                                 Stack<Card>       drawPile,
+                                 ArrayList<Player> players,
+                                 int player,
+                                 boolean direction);
+}
+
+ // return true if player wins game by playing last card
+ // returns false otherwise
+ // side effects: plays a card to top of discard Pile, possibly taking zero
+ //               or more cards from the top of the drawPile
+ //               card played must be valid card
